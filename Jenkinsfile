@@ -16,11 +16,11 @@ pipeline {
             }
         }
 
-        stage('Checkout Code') {
-            steps {
-                checkout scm
-            }
-        }
+        ////stage('Checkout Code') {
+            //steps {
+                //checkout scm
+            //}
+        //}
 
         stage('checkout') {
             steps {
@@ -35,6 +35,7 @@ pipeline {
         stage('Plan') {
             steps {
                 sh 'pwd;cd terraform/ ; terraform init'
+                sh 'terraform refresh'
                 sh "pwd;cd terraform/ ; terraform plan -out tfplan"
                 sh 'pwd;cd terraform/ ; terraform show -no-color tfplan > tfplan.txt'
             }
