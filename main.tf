@@ -37,7 +37,7 @@ resource "aws_instance" "example1" {
   ami           = "ami-0866a3c8686eaeeba" # Amazon Linux 2 AMI ID
   instance_type = "t2.micro"              # Instance type
   key_name      = "jenkins-server"
-  security_groups = [aws_security_group.allow_ssh.name] # Attach security group
+  security_groups = [aws_security_group.allow_ssh1.name] # Attach security group
 
   tags = {
     Name = "My-Automation"
