@@ -34,6 +34,6 @@ resource "aws_instance" "example" {
   security_groups = [aws_security_group.allow_ssh.name] # Attach security group
 
   tags = {
-    Name = "ExampleInstance"
+    Name = "My-Automation"
   }
 }
