@@ -8,18 +8,29 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     }
 
-   agent  any
+    agent any
     stages {
+        stage('Clean Workspace') {
+            steps {
+                deleteDir() // Cleans up the workspace before starting the pipeline
+            }
+        }
+
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('checkout') {
             steps {
-                 script{
-                        dir("terraform")
-                        {
-                            git "https://github.com/sharda123-gif/Terraform-Jenkins.git"
-                        }
+                script {
+                    dir("terraform") {
+                        git "https://github.com/sharda123-gif/Terraform-Jenkins.git"
                     }
                 }
             }
+        }
 
         stage('Plan') {
             steps {
@@ -28,21 +39,22 @@ pipeline {
                 sh 'pwd;cd terraform/ ; terraform show -no-color tfplan > tfplan.txt'
             }
         }
-        stage('Approval') {
-           when {
-               not {
-                   equals expected: true, actual: params.autoApprove
-               }
-           }
 
-           steps {
-               script {
+        stage('Approval') {
+            when {
+                not {
+                    equals expected: true, actual: params.autoApprove
+                }
+            }
+
+            steps {
+                script {
                     def plan = readFile 'terraform/tfplan.txt'
                     input message: "Do you want to apply the plan?",
                     parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
-               }
-           }
-       }
+                }
+            }
+        }
 
         stage('Apply') {
             steps {
@@ -50,5 +62,4 @@ pipeline {
             }
         }
     }
-
-  }
+}
