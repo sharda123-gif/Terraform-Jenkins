@@ -1,14 +1,20 @@
+# Configure the backend for storing the state file in S3
+terraform {
+  backend "s3" {
+    bucket = "my-trapti-bucket"
+    key    = "terraform/state/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
 # Define the provider
 provider "aws" {
   region = "us-east-1" # Specify your AWS region
 }
 
-# Create a key pair (ensure the key file already exists on your local system)
-
-
 # Create a security group to allow SSH access
-resource "aws_security_group" "allow_ssh" {
-  name        = "allow_ssh"
+resource "aws_security_group" "allow_ssh1" {
+  name        = "allow_ssh1"
   description = "Allow SSH inbound traffic"
 
   ingress {
@@ -27,7 +33,7 @@ resource "aws_security_group" "allow_ssh" {
 }
 
 # Create an EC2 instance
-resource "aws_instance" "example" {
+resource "aws_instance" "example1" {
   ami           = "ami-0866a3c8686eaeeba" # Amazon Linux 2 AMI ID
   instance_type = "t2.micro"              # Instance type
   key_name      = "jenkins-server"
