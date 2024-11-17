@@ -16,17 +16,13 @@ pipeline {
             }
         }
 
-        //stage('Checkout Code') {
-            //steps {
-                //checkout scm
-            //}
-        //}
 
         stage('checkout') {
             steps {
                 script {
                     dir("terraform") {
-                        git "https://github.com/sharda123-gif/Terraform-Jenkins.git"
+                        git branch: 'main',
+                        url: 'https://github.com/sharda123-gif/Terraform-Jenkins.git'
                     }
                 }
             }
