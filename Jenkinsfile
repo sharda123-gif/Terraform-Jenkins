@@ -16,7 +16,7 @@ pipeline {
             }
         }
 
-        ////stage('Checkout Code') {
+        //stage('Checkout Code') {
             //steps {
                 //checkout scm
             //}
